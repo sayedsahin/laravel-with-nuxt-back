@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TopicCreateRequest;
 use App\Http\Requests\TopicUpdateRequest;
 use App\Http\Resources\TopicResource;
+use App\Http\Resources\TopicsResource;
 use App\Models\Post;
 use App\Models\Topic;
 
@@ -12,8 +13,8 @@ class TopicController extends Controller
 {
     public function index()
     {
-        $topic = Topic::latest()->paginate(5);
-        return TopicResource::collection($topic);
+        $topic = Topic::latest()->paginate(10);
+        return TopicsResource::collection($topic);
     }
     public function store(TopicCreateRequest $request)
     {

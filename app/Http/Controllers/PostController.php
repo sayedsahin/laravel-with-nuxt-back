@@ -7,7 +7,6 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
-// use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
