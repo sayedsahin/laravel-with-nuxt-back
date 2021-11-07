@@ -14,7 +14,8 @@ class ReactionResource extends JsonResource
      */
     public function toArray($request)
     {
-        // Not Used. maybe should be use.
-        return parent::toArray($request);
+        return [
+            //
+        ];
     }
 }

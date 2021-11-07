@@ -18,6 +18,11 @@ class Topic extends Model implements ReactableInterface
         return $this->belongsTo(User::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -30,7 +35,7 @@ class Topic extends Model implements ReactableInterface
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
 }

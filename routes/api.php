@@ -3,9 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\ReplyReactionController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicReactionController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// DB::enableQueryLog();
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -32,15 +37,22 @@ Route::group(['prefix' => 'topic'], function() {
 
     // Topic crud
     Route::get('/', [TopicController::class, 'index']);
+    // must be add middleware
+    Route::get('/create', [TopicController::class, 'create']);
     Route::get('/{topic}', [TopicController::class, 'show']);
+    Route::get('/{topic}/edit', [TopicController::class, 'edit']);
+
+
     Route::post('/', [TopicController::class, 'store'])->middleware('auth:sanctum');
     Route::patch('/{topic}', [TopicController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/{topic}', [TopicController::class, 'destroy'])->middleware('auth:sanctum');
-
+    // Reply crud
+    Route::post('/{topic}/reply', [ReplyController::class, 'store'])->middleware('auth:sanctum');
+    
     // Reaction crud
-    Route::post('/{topic}/reaction', [TopicReactionController::class, 'toggle']);
+    Route::post('/{topic}/reaction', [TopicReactionController::class, 'toggle'])->middleware('auth:sanctum');
 
-    // Post crud
+    // Post Group
     Route::group(['prefix' => '/{topic}/posts'], function() {
         Route::get('/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
         Route::post('/', [PostController::class, 'store'])->middleware('auth:sanctum');
@@ -52,7 +64,15 @@ Route::group(['prefix' => 'topic'], function() {
             Route::post('/', [PostLikeController::class, 'store'])->middleware('auth:sanctum');
         });
     });
-    
+});
+
+Route::group(['prefix' => 'reply'], function() {
+    // Reaction crud
+    Route::post('/{reply}/reaction', [ReplyReactionController::class, 'toggle'])->middleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'tag'], function() {
+    Route::post('/', [TagController::class, 'store'])->middleware('auth:sanctum');
 });
 
 

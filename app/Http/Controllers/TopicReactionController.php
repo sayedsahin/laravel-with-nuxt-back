@@ -9,6 +9,6 @@ class TopicReactionController extends Controller
 {
     public function toggle(Request $request, Topic $topic)
     {
-        $topic->toggleReaction($request->reaction);
+        return $topic->toggleReaction($request->reaction);
     }
 }

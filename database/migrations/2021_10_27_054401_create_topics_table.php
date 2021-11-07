@@ -20,12 +20,8 @@ class CreateTopicsTable extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('body')->nullable();
-            $table->string('tags')->nullable();
             $table->bigInteger('view_count')->default(0);
             $table->timestamps();
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

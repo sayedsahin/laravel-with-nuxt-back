@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     DB::enableQueryLog();
-    
     $topic = Topic::find(22)->reactionSummary();
     dump($topic);
 

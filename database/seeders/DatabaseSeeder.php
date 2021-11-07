@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         | from Qirolab\Laravel\Reactions\Models
         */
         // Reaction::factory(10)->create();
+        
+        \App\Models\Reply::factory(50)->create();
 
     }
 }

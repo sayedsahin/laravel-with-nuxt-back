@@ -40,6 +40,7 @@ class User extends Authenticatable implements ReactsInterface
      *
      * @var array
      */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
