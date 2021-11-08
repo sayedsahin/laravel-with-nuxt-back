@@ -10,6 +10,10 @@ use App\Models\Topic;
 
 class ReplyController extends Controller
 {
+    public function show(Reply $reply)
+    {
+        return $reply;
+    }
     public function store(ReplyRequest $request, Topic $topic)
     {
         // My Way
@@ -27,5 +31,19 @@ class ReplyController extends Controller
         $topic->replies()->save($reply);
         return new ReplyResource($reply);
 
+    }
+
+    public function update(ReplyRequest $request, Reply $reply)
+    {
+        $this->authorize('isOwns', $reply);
+        $reply->body = $request->body;
+        return $reply->save();
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('isOwns', $reply);
+        $reply->delete();
+        return response(null, 204);
     }
 }

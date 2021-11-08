@@ -87,13 +87,12 @@ class TopicController extends Controller
     
     public function update(TopicRequest $request, Topic $topic)
     {
-        // Need Authorize
+        $this->authorize('update', $topic);
 
         $topic->type_id = $request->type_id;
         $topic->category_id = $request->category_id;
         $topic->title = $request->title;
         $topic->body = $request->body;
-        // $topic->user_id = $request->user()->id;
 
         $update = $topic->save();
         $topic->tags()->sync($request->tags);

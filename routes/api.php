@@ -68,7 +68,11 @@ Route::group(['prefix' => 'topic'], function() {
 
 Route::group(['prefix' => 'reply'], function() {
     // Reaction crud
+    Route::get('/{reply}', [ReplyController::class, 'show']);
     Route::post('/{reply}/reaction', [ReplyReactionController::class, 'toggle'])->middleware('auth:sanctum');
+
+    Route::patch('{reply}', [ReplyController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('{reply}', [ReplyController::class, 'delete'])->middleware('auth:sanctum');
 });
 
 Route::group(['prefix' => 'tag'], function() {

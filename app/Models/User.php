@@ -53,6 +53,11 @@ class User extends Authenticatable implements ReactsInterface
     {
         return $this->id === $topic->user->id;
     }
+
+    public function ownsReply(Reply $reply)
+    {
+        return $this->id === $reply->user->id;
+    }
     
     public function ownsPost(Post $post)
     {
