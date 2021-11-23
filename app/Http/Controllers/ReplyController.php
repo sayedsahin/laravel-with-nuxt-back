@@ -43,6 +43,7 @@ class ReplyController extends Controller
     public function destroy(Reply $reply)
     {
         $this->authorize('isOwns', $reply);
+        // $reply->reactions()->delete();
         $reply->delete();
         return response(null, 204);
     }

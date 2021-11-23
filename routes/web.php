@@ -1,19 +1,13 @@
 <?php
 
+use App\Http\Resources\ActivityResource;
+use App\Http\Resources\ReactionResource;
+use App\Models\Activity;
 use App\Models\Topic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Qirolab\Laravel\Reactions\Models\Reaction;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
 
@@ -26,4 +20,14 @@ Route::get('/', function () {
     dump($queries);
 
 
+});
+
+Route::get('/morph', function() {
+    $r = Reaction::limit(100)->get();
+    return ReactionResource::collection($r);
+});
+
+Route::get('/activity', function() {
+    return $activities = Activity::limit(100)->get();
+    return ActivityResource::collection($activities);
 });

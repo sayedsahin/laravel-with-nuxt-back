@@ -24,11 +24,12 @@ class TopicFactory extends Factory
     {
         return [
             'type_id' => 1,
-            'user_id' => $this->faker->randomDigitNotNull(),
+            // 'user_id' => $this->faker->randomDigitNotNull(),
+            'user_id' => 1,
             'category_id' => 1,
             'title' => $this->faker->sentence(),
             'body' => '<p>'.$this->faker->paragraph().'</p>',
-            'tags' => $this->faker->word().','.$this->faker->word().','.$this->faker->word(),
+            // 'tags' => $this->faker->word().','.$this->faker->word().','.$this->faker->word(),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Qirolab\Laravel\Reactions\Models\Reaction;
 
 class TopicsResource extends JsonResource
 {
@@ -17,12 +18,16 @@ class TopicsResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'user' => new UserResource($this->user),
             'category' => new CategoryResource($this->category),
             'tags' => TagResource::collection($this->tags),
             'view' => $this->view_count,
+            // All reply reaction count must be brought
+            'reaction_count' =>  $this->reactions()->count(),
+            'reply_count' => $this->replies->count(),
+            'last_activity' => $this->replies()->latest()->first(['created_at']),
         ];
     }
 }

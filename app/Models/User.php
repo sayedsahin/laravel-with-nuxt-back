@@ -21,8 +21,10 @@ class User extends Authenticatable implements ReactsInterface
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'profile_photo_path',
     ];
 
     /**
@@ -46,7 +48,12 @@ class User extends Authenticatable implements ReactsInterface
     ];
     public function avatar()
     {
-        return 'https://www.gravatar.com/avatar/'.md5($this->email).'?s=80&d=mp';
+        if ($this->profile_photo_path) {
+            return asset('storage/'.$this->profile_photo_path);
+        }else{
+            // return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=ffffff&background=5674b9';
+            return 'https://www.gravatar.com/avatar/'.md5($this->email).'?s=80&d=mp';
+        }
     }
 
     public function ownsTopic(Topic $topic)
@@ -65,5 +72,17 @@ class User extends Authenticatable implements ReactsInterface
     }
     public function hasLikedPost(Post $post) {
         return $post->likes->where('user_id', $this->id)->count() === 1;
+    }
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 }

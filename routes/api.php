@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ReplyReactionController;
 use App\Http\Controllers\TagController;
@@ -12,16 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 // DB::enableQueryLog();
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -72,11 +63,23 @@ Route::group(['prefix' => 'reply'], function() {
     Route::post('/{reply}/reaction', [ReplyReactionController::class, 'toggle'])->middleware('auth:sanctum');
 
     Route::patch('{reply}', [ReplyController::class, 'update'])->middleware('auth:sanctum');
-    Route::delete('{reply}', [ReplyController::class, 'delete'])->middleware('auth:sanctum');
+    Route::delete('{reply}', [ReplyController::class, 'destroy'])->middleware('auth:sanctum');
 });
 
 Route::group(['prefix' => 'tag'], function() {
     Route::post('/', [TagController::class, 'store'])->middleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'user'], function() {
+    Route::get('/{user}', [ProfileController::class, 'user']);
+
+    // Javascript FormData Not Support with axios patch
+    Route::post('/', [ProfileController::class, 'update'])->middleware('auth:sanctum');
+    Route::patch('/password', [ProfileController::class, 'updatePassword'])->middleware('auth:sanctum');
+
+    Route::get('/{user}/activity', [ProfileController::class, 'activity']);
+    Route::get('/{user}/topic', [ProfileController::class, 'topic']);
+    Route::get('/{user}/reply', [ProfileController::class, 'reply']);
 });
 
 

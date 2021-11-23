@@ -26,7 +26,7 @@ class ReactionFactory extends Factory
         $types = ['like', 'dislike', 'love'];
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'reactable_type' => 'App\Models\Topic',
+            'reactable_type' => 'App\Models\Reply',
             'reactable_id' => Topic::inRandomOrder()->first()->id,
             'type' => $types[array_rand($types)],
         ];

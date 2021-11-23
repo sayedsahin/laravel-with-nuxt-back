@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TopicRequest;
+use App\Http\Resources\ReplyReactionDeleteResource;
 use App\Http\Resources\ReplyResource;
 use App\Http\Resources\TopicEditResource;
 use App\Http\Resources\TopicResource;
@@ -13,13 +14,14 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
+use Qirolab\Laravel\Reactions\Models\Reaction;
 // use Illuminate\Support\Facades\DB;
 
 class TopicController extends Controller
 {
     public function index()
     {
-        $topic = Topic::latest()->paginate(10);
+        $topic = Topic::latest()->simplePaginate(10);
         return TopicsResource::collection($topic);
     }
     public function show(Topic $topic)
@@ -36,6 +38,7 @@ class TopicController extends Controller
             }
 
         }else{
+            $topic->increment('view_count');
             return new TopicResource($topic);
         }
         // return DB::getQueryLog();

@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\DB;
 
-class ReplyResource extends JsonResource
+class RepliesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,14 +16,12 @@ class ReplyResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'topic_id' => $this->topic->id,
+            'title' => $this->topic->title,
             'body' => $this->body,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'user' => new UserResource($this->user),
-            'reaction' => $this->reactionSummary(),
-            'reacted' => auth('sanctum')->user() ? $this->reacted(auth('sanctum')->user()) : null,
-            // 'query' => DB::getQueryLog(),
-
+            'user' => new UserResource($this->topic->user),
+            'category' => new CategoryResource($this->topic->category),
         ];
     }
 }

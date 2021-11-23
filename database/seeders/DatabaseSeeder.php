@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Reaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        \App\Models\Topic::factory(50)->create();
         // \App\Models\Tag::factory(10)->create();
         
         /* 
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         */
         // Reaction::factory(10)->create();
         
-        \App\Models\Reply::factory(50)->create();
+        // \App\Models\Reply::factory(50)->create();
 
     }
 }

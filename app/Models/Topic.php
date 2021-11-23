@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Qirolab\Laravel\Reactions\Contracts\ReactableInterface;
@@ -9,9 +10,16 @@ use Qirolab\Laravel\Reactions\Traits\Reactable;
 
 class Topic extends Model implements ReactableInterface
 {
-    use HasFactory, Reactable;
-    // protected $fillable = ['title', 'user_id'];
+    use HasFactory, Reactable, ActivityLog;
     protected $guarded = [];
+
+    public static function booted()
+    {
+        static::deleting(function($topic) {
+            $topic->replies->each->delete();
+            $topic->reactions()->delete();
+        });
+    }
 
     public function user()
     {
