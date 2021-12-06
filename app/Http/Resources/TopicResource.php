@@ -20,6 +20,7 @@ class TopicResource extends JsonResource
      */
     public function toArray($request)
     {
+        $replyid = $request->reply ? $request->reply : 0;
         return [
             'topic' => [
                 'id' => $this->id,
@@ -36,7 +37,7 @@ class TopicResource extends JsonResource
                 'reply_count' => $this->replies->count(),
             ],
 
-            'replies' => ReplyResource::collection($this->replies()->latest()->paginate(10))->response()->getData(true),
+            'replies' => ReplyResource::collection($this->replies()->orderByRaw('IF(id = '.$replyid.', 0, 1)')->latest()->paginate(10))->response()->getData(true),
 
 
             // 'query_log' => $queries = DB::getQueryLog(),

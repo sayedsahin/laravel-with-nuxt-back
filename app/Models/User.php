@@ -12,7 +12,7 @@ use Qirolab\Laravel\Reactions\Traits\Reacts;
 
 class User extends Authenticatable implements ReactsInterface
 {
-    use HasApiTokens, HasFactory, Notifiable, Reacts;
+    use HasApiTokens, HasFactory, Notifiable, Reacts, Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +35,7 @@ class User extends Authenticatable implements ReactsInterface
     protected $hidden = [
         'password',
         'remember_token',
+        // 'pivot',
     ];
 
     /**
@@ -52,7 +53,7 @@ class User extends Authenticatable implements ReactsInterface
             return asset('storage/'.$this->profile_photo_path);
         }else{
             // return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=ffffff&background=5674b9';
-            return 'https://www.gravatar.com/avatar/'.md5($this->email).'?s=80&d=mp';
+            return 'https://www.gravatar.com/avatar/'.strtolower(md5($this->email)).'?s=80&d=mp';
         }
     }
 

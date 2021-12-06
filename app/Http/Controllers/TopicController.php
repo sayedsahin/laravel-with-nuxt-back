@@ -43,6 +43,12 @@ class TopicController extends Controller
         }
         // return DB::getQueryLog();
     }
+
+    public function replies(Request $request)
+    {
+        //
+    }
+
     public function create()
     {
         $types = Type::orderBy('id')->get(['id', 'name', 'icon']);

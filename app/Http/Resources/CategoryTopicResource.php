@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\TopicsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class CategoryTopicResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +18,11 @@ class CategoryResource extends JsonResource
         return [
             'name' => $this->name,
             'slug' => $this->slug,
-            'color' => $this->color
+            'color' => $this->color,
+            'description' => $this->description,
+            'count_topic' => $this->topics()->count(),
+            'reacted' => auth('sanctum')->user() ? $this->isReactBy(auth('sanctum')->user()) : false,
+            'topics' => TopicsResource::collection($this->topics()->take(10)->latest()->get())
         ];
     }
 }

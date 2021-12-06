@@ -9,6 +9,6 @@ class ReplyReactionController extends Controller
 {
     public function toggle(Request $request, Reply $reply)
     {
-        return $react = $reply->toggleReaction($request->reaction);
+        return $reply->toggleReaction($request->reaction);
     }
 }

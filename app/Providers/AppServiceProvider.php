@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'topic' => 'App\Models\Topic',
             'reply' => 'App\Models\Reply',
+            'category' => 'App\Models\Category',
             'reaction' => 'Qirolab\Laravel\Reactions\Models\Reaction',
         ]);
     }

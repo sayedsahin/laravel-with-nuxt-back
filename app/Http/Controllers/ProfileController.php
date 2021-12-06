@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserPasswordRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\FollowResource;
 use App\Http\Resources\RepliesResource;
 use App\Http\Resources\TopicsResource;
 use App\Http\Resources\UserProfileResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
     public function user(User $user)
     {
-        return new UserProfileResource($user);
+        return [
+            'data' => new UserProfileResource($user),
+            'follow' => new FollowResource($user),
+        ];
     }
 
     public function update(UserUpdateRequest $request)

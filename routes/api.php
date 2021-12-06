@@ -1,22 +1,27 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ReplyReactionController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicReactionController;
+use App\Http\Resources\UserProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-// DB::enableQueryLog();
+DB::enableQueryLog();
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    // $user = $request->user();
+    return response()->json(new UserProfileResource($request->user()));
 });
 
 // Authentication
@@ -80,6 +85,23 @@ Route::group(['prefix' => 'user'], function() {
     Route::get('/{user}/activity', [ProfileController::class, 'activity']);
     Route::get('/{user}/topic', [ProfileController::class, 'topic']);
     Route::get('/{user}/reply', [ProfileController::class, 'reply']);
+
+    Route::get('/{user}/following', [FollowController::class, 'following']);
+    Route::get('/{user}/followers', [FollowController::class, 'followers']);
+
+    Route::post('/{user}/following', [FollowController::class, 'store'])->middleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'category'], function() {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::get('/{category:slug}', [CategoryController::class, 'show']);
+    Route::get('/{category:slug}/topics', [CategoryController::class, 'topics']);
+    Route::post('/{category:slug}/reaction', [CategoryController::class, 'reaction'])->middleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'search'], function() {
+    Route::get('/', [SearchController::class, 'index']);
+    Route::get('/live', [SearchController::class, 'live']);
 });
 
 
