@@ -37,13 +37,14 @@ class ActivityResource extends JsonResource
             $data['activity'] = [
                 'topic_id' => $this->activity->topic->id,
                 'topic_title' => $this->activity->topic->title,
+                'reply_id' => $this->activity_id,
                 'body' => $this->activity->body,
                 'category' => new CategoryResource($this->activity->topic->category),
                 'owner' => new UserResource($this->activity->user),
             ];
         }
 
-        if ($this->activity_type === 'reply') {
+        /*if ($this->activity_type === 'reply') {
             $data['activity'] = [
                 'topic_id' => $this->activity->topic->id,
                 'topic_title' => $this->activity->topic->title,
@@ -51,7 +52,7 @@ class ActivityResource extends JsonResource
                 'category' => new CategoryResource($this->activity->topic->category),
                 'owner' => new UserResource($this->activity->user),
             ];
-        }
+        }*/
 
         if ($this->activity_type === 'reaction' && $this->activity !== null) {
             if ($this->activity->reactable_type === 'topic') {
@@ -74,6 +75,7 @@ class ActivityResource extends JsonResource
                 'reactable_type' => $this->activity->reactable_type,
                 'topic_id' => $this->activity->reactable->topic->id,
                 'topic_title' => $this->activity->reactable->topic->title,
+                'reply_id' => $this->activity->reactable->id,
                 'body' => $this->activity->reactable->body,
                 'type' => $this->activity->type,
                 'category' => new CategoryResource($this->activity->reactable->topic->category),

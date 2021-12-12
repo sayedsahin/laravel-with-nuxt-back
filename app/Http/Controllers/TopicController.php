@@ -27,6 +27,13 @@ class TopicController extends Controller
     public function show(Topic $topic)
     {
         // $topic->simplePaginate(10);
+        $topic->increment('view_count');
+        return new TopicResource($topic);
+    }
+
+    public function replies(Topic $topic)
+    {
+        $replyid = request()->reply ? request()->reply : 0;
 
         if (request()->page || request()->order) {
             if (request()->order === 'old') {
@@ -38,15 +45,13 @@ class TopicController extends Controller
             }
 
         }else{
-            $topic->increment('view_count');
-            return new TopicResource($topic);
+            $replies = $topic->replies()
+            ->orderByRaw('IF(id = '.$replyid.', 0, 1)')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+            return ReplyResource::collection($replies);
         }
-        // return DB::getQueryLog();
-    }
-
-    public function replies(Request $request)
-    {
-        //
+        
     }
 
     public function create()
