@@ -44,16 +44,6 @@ class ActivityResource extends JsonResource
             ];
         }
 
-        /*if ($this->activity_type === 'reply') {
-            $data['activity'] = [
-                'topic_id' => $this->activity->topic->id,
-                'topic_title' => $this->activity->topic->title,
-                'body' => $this->activity->body,
-                'category' => new CategoryResource($this->activity->topic->category),
-                'owner' => new UserResource($this->activity->user),
-            ];
-        }*/
-
         if ($this->activity_type === 'reaction' && $this->activity !== null) {
             if ($this->activity->reactable_type === 'topic') {
                 $data['activity'] = [

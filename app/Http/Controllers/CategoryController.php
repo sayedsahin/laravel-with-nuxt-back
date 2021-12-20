@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoriesResource;
-use App\Http\Resources\CategoryTopicResource;
+use App\Http\Resources\CategoryTopicsResource;
 use App\Http\Resources\TopicsResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -14,14 +14,14 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $skip = ($request->get('page') - 1) * 15;
-        $categories = Category::take(15)->skip($skip)->get();
+        $categories = Category::withCount('topics')->take(15)->skip($skip)->get();
         return CategoriesResource::collection($categories);
 
 
     }
     public function show(Category $category)
     {
-        return new CategoryTopicResource($category);
+        return new CategoryTopicsResource($category);
     }
 
     public function topics(Request $request, Category $category)

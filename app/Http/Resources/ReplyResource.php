@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\DB;
 
 class ReplyResource extends JsonResource
 {
@@ -24,7 +23,6 @@ class ReplyResource extends JsonResource
             'user' => new UserResource($this->user),
             'reaction' => $this->reactionSummary(),
             'reacted' => auth('sanctum')->user() ? $this->reacted(auth('sanctum')->user()) : null,
-            // 'query' => DB::getQueryLog(),
 
         ];
     }

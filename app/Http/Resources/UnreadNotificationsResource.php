@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoriesResource extends JsonResource
+class UnreadNotificationsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,12 @@ class CategoriesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'color' => $this->color,
-            'description' => $this->description,
-            'count_topic' => $this->topics_count,
-            'reacted' => auth('sanctum')->user() ? $this->isReactBy(auth('sanctum')->user()) : false,
+            'type' => $this->type,
+            'notifiable_type' => $this->notifiable_type,
+            'notifiable_id' => $this->notifiable_id,
+            'data' => $this->data,
+            'read_at' => null,
+            'created_at' => $this->created_at,
         ];
     }
 }

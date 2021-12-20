@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -33,11 +34,15 @@ class ProfileController extends Controller
         $user->email = $request->email;
 
         if ($request->profile_photo_path) {
-            if(file_exists(public_path('storage/'.$user->profile_photo_path))){
-                @unlink(public_path('storage/'.$user->profile_photo_path));
+            if(file_exists(public_path($user->profile_photo_path))){
+                @unlink(public_path($user->profile_photo_path));
             }
-            //Change .env file 'FILESYSTEM_DRIVER=public'
-            $user->profile_photo_path = $request->profile_photo_path->store('profile');
+
+            $image = $request->file('profile_photo_path');
+            $image_name = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $image_path = 'storage/profile/'.$image_name;
+            Image::make($image)->resize(80,80)->save($image_path);
+            $user->profile_photo_path = $image_path;
         }
         $user->save();
         return new UserProfileResource($user);

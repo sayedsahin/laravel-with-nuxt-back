@@ -22,7 +22,7 @@ class TopicsResource extends JsonResource
             'updated_at' => $this->updated_at,
             'user' => new UserResource($this->user),
             'category' => new CategoryResource($this->category),
-            'tags' => TagResource::collection($this->tags),
+            'tags' => TagResource::collection($this->tags()->limit(2)->get()),
             'view' => $this->view_count,
             // All reply reaction count must be brought
             'reaction_count' =>  $this->reactions()->count(),

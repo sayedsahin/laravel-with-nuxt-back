@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Http\Resources\TopicsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryTopicResource extends JsonResource
+class CategoryTopicsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

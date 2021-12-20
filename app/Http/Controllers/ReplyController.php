@@ -6,6 +6,7 @@ use App\Http\Requests\ReplyRequest;
 use App\Http\Resources\ReplyResource;
 use App\Models\Reply;
 use App\Models\Topic;
+use App\Notifications\CreateReplyNotification;
 
 
 class ReplyController extends Controller
@@ -29,6 +30,11 @@ class ReplyController extends Controller
         $reply->user()->associate($request->user());
 
         $topic->replies()->save($reply);
+
+        if ($topic->user_id !== $reply->user_id) {
+            $topic->user->notify(new CreateReplyNotification($reply));
+        }
+        
         return new ReplyResource($reply);
 
     }

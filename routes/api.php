@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ProfileController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicReactionController;
 use App\Http\Resources\UserProfileResource;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,7 @@ Route::group(['prefix' => 'topic'], function() {
     // must be add middleware
     Route::get('/create', [TopicController::class, 'create']);
     Route::get('/{topic}', [TopicController::class, 'show']);
+    Route::get('/replies/{topic}', [TopicController::class, 'replies']);
     Route::get('/{topic}/edit', [TopicController::class, 'edit']);
 
 
@@ -71,7 +74,10 @@ Route::group(['prefix' => 'reply'], function() {
     Route::delete('{reply}', [ReplyController::class, 'destroy'])->middleware('auth:sanctum');
 });
 
-Route::group(['prefix' => 'tag'], function() {
+Route::group(['prefix' => 'tags'], function() {
+    Route::get('/', [TagController::class, 'index']);
+    Route::get('/{tag:name}', [TagController::class, 'show']);
+    Route::get('/{tag:name}/topics', [TagController::class, 'topics']);
     Route::post('/', [TagController::class, 'store'])->middleware('auth:sanctum');
 });
 
@@ -105,4 +111,6 @@ Route::group(['prefix' => 'search'], function() {
 });
 
 
-
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/notifications/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
+Route::get('/noti/{user}', [NotificationController::class, 'noti']);
