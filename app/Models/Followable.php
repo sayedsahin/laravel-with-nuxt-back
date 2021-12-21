@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Notifications\FollowNotification;
+
 trait Followable{
     public function follow(User $user)
     {
@@ -21,6 +23,7 @@ trait Followable{
         }*/
 
         $this->following()->toggle($user);
+        !$this->isFollowing($user) ?: $user->notify(new FollowNotification($this));
     }
 
     public function following()

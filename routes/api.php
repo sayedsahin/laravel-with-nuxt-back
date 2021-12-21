@@ -113,4 +113,4 @@ Route::group(['prefix' => 'search'], function() {
 
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/notifications/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
-Route::get('/noti/{user}', [NotificationController::class, 'noti']);
+Route::delete('/notifications', [NotificationController::class, 'destroy'])->middleware('auth:sanctum');

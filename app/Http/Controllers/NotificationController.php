@@ -29,4 +29,10 @@ class NotificationController extends Controller
     {
         return $request->user()->unreadNotifications->count();
     }
+
+    public function destroy(Request $request)
+    {
+        $request->user()->notifications()->delete();
+        return response(null, 204);
+    }
 }
