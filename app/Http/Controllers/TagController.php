@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagTopicsResource;
 use App\Http\Resources\TagsResource;
@@ -43,5 +44,19 @@ class TagController extends Controller
             'name' => strtolower(str_replace(' ', '-', $request->name) ),
         ]);
         return response(['id' => $tag->id, 'name' => $tag->name]);
+    }
+
+    public function search(SearchRequest $request, Tag $tag)
+    {
+        $topics = $tag->topics()
+            ->where(function($query){
+                $query->where('title', 'LIKE', '%'.request()->get('query').'%')
+                   ->orWhere('body', 'LIKE', '%'.request()->get('query').'%');
+            })
+            ->take(10)
+            ->skip((request()->get('page') - 1) * 10)
+            ->latest()
+            ->get();
+        return TopicsResource::collection($topics);
     }
 }

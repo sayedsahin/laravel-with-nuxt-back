@@ -78,6 +78,7 @@ Route::group(['prefix' => 'tags'], function() {
     Route::get('/', [TagController::class, 'index']);
     Route::get('/{tag:name}', [TagController::class, 'show']);
     Route::get('/{tag:name}/topics', [TagController::class, 'topics']);
+    Route::get('/{tag:name}/search', [TagController::class, 'search']);
     Route::post('/', [TagController::class, 'store'])->middleware('auth:sanctum');
 });
 
@@ -102,6 +103,7 @@ Route::group(['prefix' => 'category'], function() {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{category:slug}', [CategoryController::class, 'show']);
     Route::get('/{category:slug}/topics', [CategoryController::class, 'topics']);
+    Route::get('/{category:slug}/search', [CategoryController::class, 'search']);
     Route::post('/{category:slug}/reaction', [CategoryController::class, 'reaction'])->middleware('auth:sanctum');
 });
 
@@ -111,6 +113,8 @@ Route::group(['prefix' => 'search'], function() {
 });
 
 
-Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/notifications/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
-Route::delete('/notifications', [NotificationController::class, 'destroy'])->middleware('auth:sanctum');
+Route::group(['prefix' => 'notifications'], function() {
+    Route::get('/', [NotificationController::class, 'index'])->middleware('auth:sanctum');
+    Route::get('/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
+    Route::delete('/', [NotificationController::class, 'destroy'])->middleware('auth:sanctum');
+});
