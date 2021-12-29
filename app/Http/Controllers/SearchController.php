@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\TopicsResource;
 use App\Models\Reply;
 use App\Models\Topic;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\Search;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
         $offset = ($request->get('page', 1) - 1) * 10;
         return DB::select("
@@ -37,7 +37,7 @@ class SearchController extends Controller
         ");
     }
 
-    public function live(Request $request)
+    public function live(SearchRequest $request)
     {
         $offset = ($request->get('page', 1) - 1) * 10;
         return DB::select("
