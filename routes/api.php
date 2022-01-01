@@ -38,7 +38,8 @@ Route::group(['prefix' => 'topic'], function() {
     // must be add middleware
     Route::get('/create', [TopicController::class, 'create']);
     Route::get('/{topic}', [TopicController::class, 'show']);
-    Route::get('/replies/{topic}', [TopicController::class, 'replies']);
+    Route::get('/{topic}/similar', [TopicController::class, 'similarByTag']);
+    Route::get('/{topic}/replies', [TopicController::class, 'replies']);
     Route::get('/{topic}/edit', [TopicController::class, 'edit']);
 
 
@@ -118,3 +119,5 @@ Route::group(['prefix' => 'notifications'], function() {
     Route::get('/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
     Route::delete('/', [NotificationController::class, 'destroy'])->middleware('auth:sanctum');
 });
+
+Route::get('/following', [FollowController::class, 'topics'])->middleware('auth:sanctum');
