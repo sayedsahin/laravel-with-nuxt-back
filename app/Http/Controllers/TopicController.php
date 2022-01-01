@@ -31,6 +31,19 @@ class TopicController extends Controller
         return new TopicResource($topic);
     }
 
+    public function similarByTag(Topic $topic)
+    {
+        $tags = $topic->tags->pluck('id');
+        $topics = $topic->whereHas('tags', function($q) use ($tags) {
+            $q->whereIn('tag_id', $tags);
+        })
+        ->take(10)
+        ->skip((request()->get('page') - 1) * 10)
+        ->latest()
+        ->get();
+        return TopicsResource::collection($topics);
+    }
+
     public function replies(Topic $topic)
     {
         $replyid = request()->reply ? request()->reply : 0;
