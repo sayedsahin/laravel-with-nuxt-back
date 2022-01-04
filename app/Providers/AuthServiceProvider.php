@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,6 +29,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //https://laravelvuespa.com/authentication/laravel-authentication
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return 'http://localhost:3000/reset-password/'.$token.'?email='.$user->getEmailForPasswordReset();
+        });
     }
 }

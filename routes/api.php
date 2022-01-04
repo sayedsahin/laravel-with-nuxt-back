@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 DB::enableQueryLog();
 
@@ -121,3 +125,19 @@ Route::group(['prefix' => 'notifications'], function() {
 });
 
 Route::get('/following', [FollowController::class, 'topics'])->middleware('auth:sanctum');
+
+// Sanctum
+/*if (!app()->routesAreCached() || config('sanctum.routes') === true) {
+    Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], function () {
+        Route::get('/csrf-cookie', CsrfCookieController::class.'@show')->middleware('web');
+    });
+}*/
+
+
+// Create Custom Fortify
+
+if (Features::enabled(Features::resetPasswords())) {
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->middleware(['guest']);
+                
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])->middleware(['guest']);
+}
