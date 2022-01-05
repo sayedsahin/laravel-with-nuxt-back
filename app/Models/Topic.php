@@ -45,5 +45,4 @@ class Topic extends Model implements ReactableInterface
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
-
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PinController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ProfileController;
@@ -119,6 +120,10 @@ Route::group(['prefix' => 'notifications'], function() {
     Route::get('/', [NotificationController::class, 'index'])->middleware('auth:sanctum');
     Route::get('/count', [NotificationController::class, 'notificationCount'])->middleware('auth:sanctum');
     Route::delete('/', [NotificationController::class, 'destroy'])->middleware('auth:sanctum');
+});
+
+Route::group(['prefix' => 'pins'], function() {
+    Route::get('/topics', [PinController::class, 'topics']);
 });
 
 Route::get('/following', [FollowController::class, 'topics'])->middleware('auth:sanctum');
