@@ -11,7 +11,6 @@ use App\Http\Resources\TopicsResource;
 use App\Http\Resources\UserProfileResource;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Image;
 

@@ -15,7 +15,6 @@ use App\Models\Topic;
 use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use Qirolab\Laravel\Reactions\Models\Reaction;
-// use Illuminate\Support\Facades\DB;
 
 class TopicController extends Controller
 {

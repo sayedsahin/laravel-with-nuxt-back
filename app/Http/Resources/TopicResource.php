@@ -8,7 +8,6 @@ use App\Http\Resources\ReactionResource;
 use App\Http\Resources\ReplyResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-// use Illuminate\Support\Facades\DB;
 
 class TopicResource extends JsonResource
 {
@@ -38,9 +37,6 @@ class TopicResource extends JsonResource
             ],
 
             // 'replies' => ReplyResource::collection($this->replies()->orderByRaw('IF(id = '.$replyid.', 0, 1)')->latest()->paginate(10))->response()->getData(true),
-
-
-            // 'query_log' => $queries = DB::getQueryLog(),
         ];
     }
 }

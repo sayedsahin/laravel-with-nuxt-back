@@ -16,14 +16,11 @@ use App\Http\Controllers\TopicReactionController;
 use App\Http\Resources\UserProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
-
-DB::enableQueryLog();
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     // $user = $request->user();

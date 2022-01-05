@@ -11,6 +11,7 @@ class PostLikeController extends Controller
 {
     public function store(Request $request, Topic $topic, Post $post)
     {
+        // Old Project
         $this->authorize('like', $post);
 
         if ($request->user()->hasLikedPost($post)) {

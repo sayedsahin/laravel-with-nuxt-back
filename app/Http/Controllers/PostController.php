@@ -10,6 +10,7 @@ use App\Models\Topic;
 
 class PostController extends Controller
 {
+    // Old Project
     public function show($topic, Post $post)
     {
         return new PostResource($post);
