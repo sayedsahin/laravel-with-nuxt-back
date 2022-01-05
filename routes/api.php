@@ -14,6 +14,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicReactionController;
+use App\Http\Controllers\TrendController;
 use App\Http\Resources\UserProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
@@ -124,6 +125,10 @@ Route::group(['prefix' => 'notifications'], function() {
 
 Route::group(['prefix' => 'pins'], function() {
     Route::get('/topics', [PinController::class, 'topics']);
+});
+
+Route::group(['prefix' => 'trends'], function() {
+    Route::get('/', [TrendController::class, 'index']);
 });
 
 Route::get('/following', [FollowController::class, 'topics'])->middleware('auth:sanctum');
