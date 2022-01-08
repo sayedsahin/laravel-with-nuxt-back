@@ -22,8 +22,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Science',
-            'slug' => 'science'
+            'name' => 'Music',
+            'slug' => 'music'
         ];
     }
 }
