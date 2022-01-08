@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //https://laravelvuespa.com/authentication/laravel-authentication
         ResetPassword::createUrlUsing(function ($user, string $token) {
-            return 'http://localhost:3000/reset-password/'.$token.'?email='.$user->getEmailForPasswordReset();
+            return 'https://sayeeds.herokuapp.com/reset-password/'.$token.'?email='.$user->getEmailForPasswordReset();
         });
     }
 }
