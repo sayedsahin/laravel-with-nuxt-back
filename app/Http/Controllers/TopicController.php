@@ -45,24 +45,27 @@ class TopicController extends Controller
 
     public function replies(Topic $topic)
     {
-        $replyid = request()->reply ? request()->reply : 0;
+        // $replyid = request()->reply ? request()->reply : 0;
 
         if (request()->page || request()->order) {
             if (request()->order === 'old') {
-                return ReplyResource::collection($topic->replies()->orderBy('id', 'asc')->paginate(10));
+                $replies = $topic->replies()->orderBy('id', 'asc')->paginate(10);
             }elseif(request()->order === 'react') {
-                return ReplyResource::collection($topic->replies()->withCount('reactions')->orderBy('reactions_count', 'desc')->paginate(10));
+                $replies = $topic->replies()->withCount('reactions')->orderBy('reactions_count', 'desc')->paginate(10);
             }else{
-                return ReplyResource::collection($topic->replies()->orderBy('id', 'desc')->paginate(10));
+                $replies = $topic->replies()->orderBy('id', 'desc')->paginate(10);
             }
 
-        }else{
+        }elseif(request()->reply){
             $replies = $topic->replies()
             ->orderByRaw('IF(id = '.$replyid.', 0, 1)')
             ->orderBy('id', 'desc')
             ->paginate(10);
-            return ReplyResource::collection($replies);
+        }else{
+            $replies = $topic->replies()->orderBy('id', 'desc')->paginate(10);
         }
+
+        return ReplyResource::collection($replies);
         
     }
 
