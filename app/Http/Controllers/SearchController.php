@@ -33,7 +33,7 @@ class SearchController extends Controller
             ON topics.category_id = categories.id
             WHERE replies.body LIKE '%{$request->get('query')}%' 
             ORDER BY created_at DESC
-            LIMIT $offset, 10
+            LIMIT 10 OFFSET $offset,
         ");
     }
 
@@ -51,7 +51,7 @@ class SearchController extends Controller
             ON replies.topic_id = topics.id
             WHERE replies.body LIKE '%{$request->get('query')}%' 
             ORDER BY created_at DESC
-            LIMIT $offset, 10
+            LIMIT 10 OFFSET $offset
         ");
     }
 }
