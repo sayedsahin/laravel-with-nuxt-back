@@ -25,7 +25,7 @@ trait ActivityLog
     public function recordActivity($event)
     {
         $this->activities()->create([
-            'user_id' => 1,
+            'user_id' => auth()->id(),
             'type' => $event.class_basename($this)
             // 'type' => $event.'_'.strtolower(class_basename($this))
         ]);
