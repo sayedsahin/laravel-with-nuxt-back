@@ -22,8 +22,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Music',
-            'slug' => 'music'
+            'name' => ucfirst($this->faker->unique()->word()),
+            'slug' => $this->faker->unique()->word()
         ];
     }
 }
