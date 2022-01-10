@@ -49,12 +49,12 @@ class User extends Authenticatable implements ReactsInterface
     ];
     public function avatar()
     {
-        if ($this->profile_photo_path) {
-            return asset($this->profile_photo_path);
-        }else{
+        // if ($this->profile_photo_path) {
+            // return asset($this->profile_photo_path);
+        // }else{
             // return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=ffffff&background=5674b9';
             return 'https://www.gravatar.com/avatar/'.strtolower(md5($this->email)).'?s=80&d=mp';
-        }
+        // }
     }
 
     public function ownsTopic(Topic $topic)
